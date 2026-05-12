@@ -10,12 +10,22 @@ const handle = document.getElementById('dragHandle');
 const track = document.getElementById('dragTrack');
 const percentageDisplay = document.getElementById('dragPercentage');
 const messageDisplay = document.getElementById('dragMessage');
+
 let dragging = false;
 let startX = 0;
 let handleLeft = 0;
 
+// Feedback messages + progress fill
 function updateFeedback(percentage) {
+
   percentageDisplay.textContent = percentage + '%';
+
+  // progress fill effect
+  track.style.background = `linear-gradient(
+    to right,
+    #ff6ec7 ${percentage}%,
+    rgba(255,255,255,0.08) ${percentage}%
+  )`;
 
   if (percentage <= 10) {
     messageDisplay.textContent = 'very low 😭';
@@ -40,19 +50,29 @@ function updateFeedback(percentage) {
   }
 }
 
+// Start dragging
 handle.addEventListener('pointerdown', event => {
+
   dragging = true;
+
   startX = event.clientX;
-  handleLeft = Number((handle.style.transform || 'translateX(0px)').replace(/[^0-9.-]/g, '')) || 0;
+
+  handleLeft = Number(
+    (handle.style.transform || 'translateX(0px)')
+      .replace(/[^0-9.-]/g, '')
+  ) || 0;
+
   handle.setPointerCapture(event.pointerId);
 });
 
+// Drag movement
 window.addEventListener('pointermove', event => {
+
   if (!dragging) return;
 
   const trackRect = track.getBoundingClientRect();
 
-  // harder to complete fully
+  // makes completion slightly harder
   const maxX = trackRect.width - handle.offsetWidth - 12;
 
   const delta = event.clientX - startX;
@@ -68,48 +88,74 @@ window.addEventListener('pointermove', event => {
 
   updateFeedback(percentage);
 
-  // ONLY open at true 100%
+  // Open ONLY at full completion
   if (percentage >= 100) {
 
-    // lock handle at end
     handle.style.transform = `translateX(${maxX}px)`;
 
     dragging = false;
 
-    // show PERFECT for a moment
+    // Small delay so "Perfect ❤️" is visible
     setTimeout(() => {
       openReveal();
     }, 700);
   }
 });
 
+// Release handling
 window.addEventListener('pointerup', () => {
+
   if (!dragging) return;
+
   dragging = false;
-  const transform = handle.style.transform || 'translateX(0px)';
-  const current = Number(transform.replace(/[^0-9.-]/g, '')) || 0;
+
+  const transform =
+    handle.style.transform || 'translateX(0px)';
+
+  const current =
+    Number(transform.replace(/[^0-9.-]/g, '')) || 0;
+
   const trackRect = track.getBoundingClientRect();
-  const maxX = trackRect.width - handle.offsetWidth - 4;
-  if (current < maxX * 0.99) {
+
+  const maxX =
+    trackRect.width - handle.offsetWidth - 12;
+
+  // If not fully completed → reset smoothly
+  if (current < maxX) {
+
+    handle.style.transition = 'transform 0.3s ease';
+
     handle.style.transform = 'translateX(0px)';
+
+    setTimeout(() => {
+      handle.style.transition = '';
+    }, 300);
+
     handleLeft = 0;
+
     updateFeedback(0);
-  } else {
-    openReveal();
   }
 });
 
+// Open reveal animation
 function openReveal() {
+
   overlay.classList.add('open');
+
   setTimeout(() => {
     overlay.style.display = 'none';
   }, 500);
 }
 
+// Fade-in sections on scroll
 window.addEventListener('scroll', function() {
+
   const sections = document.querySelectorAll('.section');
+
   sections.forEach(section => {
+
     const rect = section.getBoundingClientRect();
+
     if (rect.top < window.innerHeight - 100) {
       section.classList.add('fade-in');
     }
