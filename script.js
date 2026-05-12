@@ -15,6 +15,7 @@ let handleLeft = 0;
 handle.addEventListener('pointerdown', event => {
   dragging = true;
   startX = event.clientX;
+  handleLeft = Number((handle.style.transform || 'translateX(0px)').replace(/[^0-9.-]/g, '')) || 0;
   handle.setPointerCapture(event.pointerId);
 });
 
@@ -25,7 +26,8 @@ window.addEventListener('pointermove', event => {
   const delta = event.clientX - startX;
   const nextLeft = Math.min(Math.max(handleLeft + delta, 0), maxX);
   handle.style.transform = `translateX(${nextLeft}px)`;
-  if (nextLeft >= maxX * 0.92) {
+  handleLeft = nextLeft;
+  if (nextLeft >= maxX * 0.99) {
     openReveal();
   }
 });
@@ -37,7 +39,7 @@ window.addEventListener('pointerup', () => {
   const current = Number(transform.replace(/[^0-9.-]/g, '')) || 0;
   const trackRect = track.getBoundingClientRect();
   const maxX = trackRect.width - handle.offsetWidth - 4;
-  if (current < maxX * 0.55) {
+  if (current < maxX * 0.99) {
     handle.style.transform = 'translateX(0px)';
     handleLeft = 0;
   } else {
