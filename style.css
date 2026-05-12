@@ -182,6 +182,26 @@ body {
   animation: pulseBadge 2.2s ease-in-out infinite;
 }
 
+.drag-feedback {
+  margin-top: 16px;
+  text-align: center;
+}
+
+.drag-percentage {
+  display: block;
+  font-size: 1.8rem;
+  font-weight: 800;
+  color: #ff6ec7;
+  margin-bottom: 6px;
+}
+
+.drag-message {
+  display: block;
+  font-size: 1rem;
+  color: #f2c8d9;
+  min-height: 24px;
+}
+
 @keyframes pulseBadge {
   0%, 100% { transform: translateY(0); opacity: 1; }
   50% { transform: translateY(-6px); opacity: 0.95; }

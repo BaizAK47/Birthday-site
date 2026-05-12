@@ -8,9 +8,20 @@ function scrollToNext() {
 const overlay = document.getElementById('revealOverlay');
 const handle = document.getElementById('dragHandle');
 const track = document.getElementById('dragTrack');
+const percentageDisplay = document.getElementById('dragPercentage');
+const messageDisplay = document.getElementById('dragMessage');
 let dragging = false;
 let startX = 0;
 let handleLeft = 0;
+
+function updateFeedback(percentage) {
+  percentageDisplay.textContent = percentage + '%';
+  if (percentage < 100) {
+    messageDisplay.textContent = 'Not enough 😢';
+  } else {
+    messageDisplay.textContent = 'Perfect! 🎉';
+  }
+}
 
 handle.addEventListener('pointerdown', event => {
   dragging = true;
@@ -27,6 +38,8 @@ window.addEventListener('pointermove', event => {
   const nextLeft = Math.min(Math.max(handleLeft + delta, 0), maxX);
   handle.style.transform = `translateX(${nextLeft}px)`;
   handleLeft = nextLeft;
+  const percentage = Math.round((nextLeft / maxX) * 100);
+  updateFeedback(percentage);
   if (nextLeft >= maxX * 0.99) {
     openReveal();
   }
@@ -42,6 +55,7 @@ window.addEventListener('pointerup', () => {
   if (current < maxX * 0.99) {
     handle.style.transform = 'translateX(0px)';
     handleLeft = 0;
+    updateFeedback(0);
   } else {
     openReveal();
   }
