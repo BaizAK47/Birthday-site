@@ -2,7 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: 'Arial', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 body {
@@ -81,6 +81,57 @@ body {
 .drag-handle:active {
   cursor: grabbing;
   transform: scale(0.96);
+}
+
+.slider-track {
+  position: relative;
+  height: 64px;
+  border-radius: 999px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.18);
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  margin-top: 18px;
+  cursor: pointer;
+}
+
+.slider-thumb {
+  position: absolute;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6ec7, #ff9a4d);
+  display: grid;
+  place-items: center;
+  font-size: 1.6rem;
+  color: white;
+  box-shadow: 0 14px 30px rgba(0,0,0,0.25);
+  left: 0;
+  transition: left 0.1s linear;
+}
+
+.love-animation {
+  position: relative;
+  height: 80px;
+  margin-top: 12px;
+}
+
+.love-pop {
+  position: absolute;
+  font-size: 2rem;
+  animation: popLove 1s ease-out forwards;
+}
+
+@keyframes popLove {
+  0% {
+    opacity: 1;
+    transform: translateY(0) scale(0.5);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-60px) scale(1.2);
+  }
 }
 
 .reveal-overlay.open {
