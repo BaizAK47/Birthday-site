@@ -7,12 +7,22 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+  <div class="reveal-overlay" id="revealOverlay">
+    <div class="reveal-card">
+      <h2>Happy Birthday Surprise</h2>
+      <p>Drag the card to open the celebration</p>
+      <div class="drag-track" id="dragTrack">
+        <span class="drag-label">drag to open</span>
+        <div class="drag-handle" id="dragHandle">🎉</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Landing -->
   <section class="hero">
     <h1>Happy Birthday Nehuttan and Neenuttan ❤️</h1>
     <p class="subtitle">Welcome to the 25 club — you are not in the early 20s anymore.</p>
-    <button onclick="scrollToNext()">tap here idiot</button>
+    <button onclick="scrollToNext()">tap here</button>
     <div class="hero-decor">🎂✨🎈</div>
     <div class="party-badge">🎉 25th Birthday Club 🎉</div>
   </section>
