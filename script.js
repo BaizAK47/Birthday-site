@@ -1,10 +1,3 @@
-function scrollToNext() {
-  window.scrollTo({
-    top: window.innerHeight,
-    behavior: "smooth"
-  });
-}
-
 const overlay = document.getElementById('revealOverlay');
 const sliderTrack = document.getElementById('sliderTrack');
 const sliderThumb = document.getElementById('sliderThumb');
