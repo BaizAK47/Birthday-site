@@ -4,6 +4,26 @@ const sliderThumb = document.getElementById('sliderThumb');
 const percentageDisplay = document.getElementById('dragPercentage');
 const messageDisplay = document.getElementById('dragMessage');
 const loveAnimation = document.getElementById('loveAnimation');
+
+const music = document.getElementById('backgroundMusic');
+const musicToggle = document.getElementById('musicToggle');
+
+music.volume = 0.15;
+
+musicToggle.addEventListener('click', () => {
+
+  if (music.paused) {
+
+    music.play();
+    musicToggle.classList.add('playing');
+
+  } else {
+
+    music.pause();
+    musicToggle.classList.remove('playing');
+  }
+});
+
 let dragging = false;
 
 function updateFeedback(percentage) {
